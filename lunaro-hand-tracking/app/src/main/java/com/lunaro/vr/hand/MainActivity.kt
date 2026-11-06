@@ -85,7 +85,7 @@ class MainActivity : ComponentActivity(), WindowSystemView.Callbacks {
         val intent = when {
             id == "settings" -> Intent(Settings.ACTION_SETTINGS)
             app != null -> app
-            else -> Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            else -> Intent(Intent.ACTION_VIEW, Uri.parse(url ?: "https://www.google.com"))
         }
         try {
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
