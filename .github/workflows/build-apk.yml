@@ -1,7 +1,6 @@
 name: Build APK
 on:
   push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -10,16 +9,60 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Localizar o projeto (acha o settings.gradle.kts em qualquer pasta)
+        run: |
+          echo "== Arquivos do repositório =="
+          find . -maxdepth 4 -not -path "./.git/*" | sort | head -80
+          F=$(find . -name settings.gradle.kts -not -path "./.git/*" | head -1)
+          if [ -z "$F" ]; then
+            echo "ERRO: settings.gradle.kts não encontrado. Suba TODOS os arquivos do projeto." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "PROJECT_DIR=$(dirname "$F")" >> "$GITHUB_ENV"
+          echo "Projeto em: $(dirname "$F")"
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
+
+      - name: Aceitar licenças do Android SDK
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+
+      - name: Baixar modelo de mãos do MediaPipe
+        run: |
+          mkdir -p "$PROJECT_DIR/app/src/main/assets"
+          curl -fL -o "$PROJECT_DIR/app/src/main/assets/hand_landmarker.task" \
+            https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task
+          ls -la "$PROJECT_DIR/app/src/main/assets"
+
       - name: Compilar APK (debug, assinado com a chave de debug)
-        run: gradle assembleDebug --stacktrace
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: gradle assembleDebug --console=plain --stacktrace 2>&1 | tee build.log
+
+      - name: Mostrar o erro na página da execução
+        if: failure()
+        run: |
+          {
+            echo "## Erro de compilação (copie ou tire print disto)"
+            echo '```'
+            grep -E "^e: |error:|What went wrong|Could not|FAILED|Caused by" -A4 "$PROJECT_DIR/build.log" | head -80
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: lunaro-hand-tracking-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-log
+          path: ${{ env.PROJECT_DIR }}/build.log
