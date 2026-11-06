@@ -1,0 +1,1275 @@
+# LUNARO VR — SISTEMA DE REALIDADE VIRTUAL (VR) E REALIDADE AUMENTADA (AR) PARA ANDROID
+
+## 1. VISÃO GERAL DO PROJETO
+
+Quero desenvolver um aplicativo profissional de realidade virtual chamado **LUNARO VR**, inspirado na interface, na experiência visual e na organização espacial do Meta Quest 3.
+
+O aplicativo será desenvolvido principalmente para smartphones Android utilizados em óculos VR Box convencionais.
+
+O objetivo é criar uma experiência de realidade virtual imersiva, moderna, elegante, fluida e tridimensional, que se aproxime visualmente e funcionalmente da experiência do Meta Quest 3 dentro das limitações reais do hardware.
+
+Não quero um simples aplicativo que divide a tela em duas partes e exibe um menu estático.
+
+Quero um verdadeiro ambiente virtual com:
+- Interface tridimensional.
+- Janelas flutuantes.
+- Ambientes imersivos.
+- Navegador integrado.
+- Teclado virtual 3D.
+- Interface espacial.
+- Rastreamento de cabeça.
+- Rastreamento de mãos quando tecnicamente possível.
+- Contorno 3D das mãos.
+- Interface que acompanha a mão.
+- Interação com janelas no espaço.
+- Perspectiva espacial real.
+- Aplicativos e ferramentas integrados.
+- Possibilidade de utilizar diferentes ambientes virtuais.
+
+O projeto deve ser desenvolvido de maneira modular, profissional e preparado para futuras atualizações.
+
+---
+
+# 2. HARDWARE E COMPATIBILIDADE
+
+O aplicativo será utilizado em um smartphone Android colocado dentro de um VR Box convencional.
+
+Considerar:
+- Giroscópio.
+- Acelerômetro.
+- Tela do smartphone.
+- Câmera frontal e traseira, quando disponíveis.
+- Microfone.
+- Sensores Android.
+- Limitações de processamento.
+- Limitações de memória.
+- Limitações de rastreamento.
+- Diferenças entre modelos de smartphones.
+
+O sistema deve utilizar renderização estereoscópica Side-by-Side, dividindo a imagem em duas visualizações, uma para cada olho.
+
+A interface deve ser ajustada para o uso com lentes de VR Box.
+
+Implementar:
+- Configuração de distância entre lentes, quando possível.
+- Ajuste de escala visual.
+- Centralização da imagem.
+- Recentragem da visão.
+- Ajuste de conforto.
+- Configurações de sensibilidade do giroscópio.
+- Correção de distorção óptica, caso seja necessária e compatível com o headset.
+- Menu de calibração inicial.
+
+**Não inventar capacidades que o VR Box não possui.**
+
+VR Box convencional normalmente oferece rastreamento rotacional 3DoF, mas não rastreamento posicional 6DoF real.
+
+O aplicativo deve informar claramente quais recursos funcionam nativamente, quais dependem de câmeras externas e quais exigem hardware adicional.
+
+---
+
+# 3. INTERFACE PRINCIPAL — ESTILO META QUEST 3
+
+Criar uma interface visual extremamente bonita e profissional, inspirada no Meta Quest 3 e no Horizon OS.
+
+A interface deverá possuir:
+- Design moderno.
+- Aparência premium.
+- Elementos tridimensionais.
+- Janelas com profundidade.
+- Bordas suaves.
+- Cantos arredondados.
+- Transparência moderada.
+- Animações fluidas.
+- Iluminação sutil.
+- Sombras realistas.
+- Efeitos de hover.
+- Feedback visual.
+- Transições naturais.
+- Design minimalista.
+- Tipografia legível.
+- Ícones modernos.
+
+Não quero uma interface genérica de aplicativo Android.
+
+Quero que pareça um sistema operacional de realidade virtual.
+
+Utilizar o Meta Quest 3 como referência visual, sem copiar assets proprietários.
+
+A interface deve possuir:
+- Menu principal.
+- Barra de aplicativos.
+- Biblioteca.
+- Configurações.
+- Navegador.
+- Área de janelas.
+- Menu de interação.
+- Sistema de notificações.
+- Configurações rápidas.
+- Controle de ambientes.
+
+A interface precisa parecer integrada a um ambiente 3D real.
+
+---
+
+# 4. INTERFACE ESPACIAL WORLD-LOCKED
+
+Implementar um sistema de janelas tridimensionais semelhante ao Meta Quest 3.
+
+As janelas devem existir em posições fixas no ambiente virtual, utilizando coordenadas tridimensionais reais.
+
+Não devem ficar permanentemente presas à câmera.
+
+## Comportamento
+
+Quando uma janela for aberta:
+- Ela aparecerá inicialmente à frente do usuário.
+- A distância inicial será configurável.
+- A janela poderá ser movida.
+- A janela poderá ser girada.
+- A janela poderá ser redimensionada.
+- A janela poderá ser reposicionada no espaço.
+- A janela poderá ser minimizada.
+- A janela poderá ser fechada.
+
+Depois de posicionada, a janela permanecerá fixa no espaço virtual.
+
+## Efeito de distância e perspectiva
+
+Implementar o comportamento de interface espacial real:
+
+- Se o usuário se afastar da janela, ela permanecerá onde estava.
+- A janela parecerá menor naturalmente devido à perspectiva.
+- Não reduzir artificialmente a escala da janela.
+- Não aumentar a janela para compensar a distância.
+- Não fazer a janela acompanhar continuamente a cabeça.
+- Se o usuário andar para trás, a janela continuará no mesmo lugar.
+- Se o usuário andar para frente, a janela parecerá maior naturalmente.
+- Se o usuário observar a janela de lado, deverá enxergar seu ângulo real.
+- A janela deve manter sua escala física constante no ambiente virtual.
+
+A mudança aparente de tamanho deverá acontecer exclusivamente devido à perspectiva da câmera.
+
+Não confundir:
+- Head-Locked UI: interface presa à cabeça.
+- World-Locked UI: interface posicionada no mundo virtual.
+
+O menu inicial pode aparecer diante do usuário, mas as janelas abertas devem poder permanecer no espaço.
+
+**Importante:** não simular rastreamento posicional físico sem suporte do hardware.
+
+Em VR Box convencional, o giroscópio normalmente fornece apenas rotação da cabeça. Para detectar que o usuário realmente andou para trás, será necessário rastreamento posicional compatível, câmera externa, sistema de tracking ou outro recurso adicional.
+
+Caso não exista rastreamento posicional, criar uma alternativa de movimentação virtual e deixar essa limitação clara.
+
+---
+
+# 5. INTERFACE DA MÃO — HAND-FOLLOWING UI
+
+Criar uma interface tridimensional que acompanhe a mão do usuário.
+
+Essa interface deve funcionar como um painel espacial ligado à palma da mão.
+
+Quando a mão for detectada:
+- A interface poderá aparecer sobre ou acima da palma.
+- O painel deverá acompanhar a posição da mão.
+- O painel deverá acompanhar a rotação da mão.
+- O painel deverá acompanhar a orientação da palma.
+- O painel deverá acompanhar os movimentos do pulso.
+- A interface deverá girar quando o usuário girar a mão.
+- A interface deverá se movimentar quando a mão se movimentar.
+- O painel deverá permanecer alinhado à mão.
+
+A interface não deve simplesmente seguir a posição da mão.
+
+Ela precisa acompanhar também sua orientação tridimensional.
+
+Utilizar:
+- Position.
+- Rotation.
+- Quaternion.
+- Transform.
+- Offset configurável.
+- Suavização de movimento.
+- Correção de orientação.
+- Estabilização de tracking.
+
+O painel deverá ter um posicionamento confortável, evitando cobrir completamente a mão.
+
+Implementar opções para:
+- Distância do painel em relação à palma.
+- Escala.
+- Rotação.
+- Posição.
+- Transparência.
+- Sensibilidade.
+- Estabilização.
+
+A interface deve acompanhar a mão com baixa latência e sem movimentos bruscos.
+
+Não criar tracking falso. Caso o hardware não consiga detectar a mão, informar a limitação e oferecer uma alternativa.
+
+---
+
+# 6. CONTORNO DAS MÃOS — HAND OUTLINE
+
+Implementar um sistema de contorno tridimensional das mãos.
+
+O usuário deverá conseguir enxergar suas mãos dentro do ambiente virtual por meio de um contorno visual.
+
+O contorno deverá ser construído a partir dos dados reais de rastreamento da mão.
+
+Não quero apenas uma imagem estática de uma mão.
+
+Não quero um desenho genérico que não acompanhe os movimentos.
+
+O sistema deverá reconstruir a posição da mão utilizando landmarks, joints ou uma malha rastreada.
+
+O contorno deve acompanhar:
+- Palma.
+- Dedos.
+- Polegar.
+- Indicador.
+- Médio.
+- Anelar.
+- Mindinho.
+- Articulações.
+- Pulso.
+
+Implementar:
+- Contorno tridimensional.
+- Linhas conectadas.
+- Articulações visíveis.
+- Feedback visual.
+- Suavização.
+- Atualização em tempo real.
+- Correção de jitter.
+- Ajuste de espessura.
+- Opções de cor.
+- Opções de brilho.
+- Opções de transparência.
+
+O contorno deve ficar alinhado à mão real, acompanhando sua posição e rotação.
+
+Não criar um efeito visual que pareça uma mão flutuante sem relação com o movimento real.
+
+Se o tracking não estiver disponível, não fingir que o sistema está rastreando a mão.
+
+---
+
+# 7. RASTREAMENTO DE MÃOS
+
+Implementar o rastreamento de mãos mais preciso possível dentro do hardware disponível.
+
+Detectar:
+- Mão esquerda.
+- Mão direita.
+- Palma.
+- Pulso.
+- Dedos.
+- Articulações.
+- Posição.
+- Rotação.
+- Orientação.
+- Pinça entre dedos.
+- Gestos.
+
+O sistema deverá tentar detectar as mãos em tempo real.
+
+Utilizar tecnologias compatíveis com Android e Unity, avaliando soluções de computer vision e hand tracking.
+
+A arquitetura deve permitir substituir ou melhorar o sistema de tracking futuramente.
+
+**Não assumir que a câmera do celular poderá enxergar as mãos quando o smartphone estiver dentro do VR Box.**
+
+Caso a câmera fique bloqueada ou direcionada para outra posição, implementar suporte a:
+- Câmera externa.
+- Tracking externo.
+- Segundo dispositivo compatível.
+- Controladores.
+- Alternativas de interação.
+
+Informar claramente quais soluções são necessárias para cada recurso.
+
+---
+
+# 7-B. HAND TRACKING — VISUAL E INTERAÇÃO DIRETA
+
+> Esta seção complementa e, em caso de conflito, tem prioridade sobre as seções 5, 6, 7 e 9 no que diz respeito ao estilo visual das mãos e à forma principal de clicar em elementos.
+
+## Aparência das mãos
+
+Quero que as mãos virtuais tenham um estilo minimalista:
+
+- Contorno predominantemente preto.
+- Dedos com tonalidade cinza.
+- Articulações identificáveis.
+- Visual semelhante a um esqueleto 3D estilizado.
+- Sem aparência de mãos humanas realistas.
+- Movimento sincronizado com as mãos reais.
+
+O contorno deverá acompanhar dedos, palma e pulso em tempo real.
+
+## Interação direta com interfaces flutuantes
+
+O usuário deverá conseguir clicar diretamente nos elementos da interface utilizando o dedo indicador.
+
+Funcionamento:
+
+1. O usuário estende o dedo indicador.
+2. Aproxima o dedo de um botão virtual.
+3. Toca diretamente na superfície do botão.
+4. O botão responde imediatamente.
+5. A ação é executada sem exigir pinça ou confirmação adicional.
+
+A interação deve funcionar em:
+
+- Botões.
+- Ícones de aplicativos.
+- YouTube, Netflix e outros aplicativos.
+- Janelas flutuantes.
+- Menus.
+- Teclado virtual.
+- Configurações.
+- Sliders e controles.
+
+## Precisão e resposta
+
+Implementar tracking da ponta do dedo, detecção de contato virtual e raycast 3D.
+
+O sistema deve:
+
+- Responder com a menor latência possível.
+- Evitar cliques duplicados.
+- Evitar selecionar elementos errados.
+- Não exigir movimentos exagerados.
+- Manter a correspondência entre o dedo real e o elemento virtual.
+- Executar a ação no momento correto do toque.
+- Utilizar feedback visual instantâneo.
+
+Quero uma experiência extremamente fluida, intuitiva e confiável, com interação projetada para funcionar em tempo real.
+
+Não utilizar tracking falso ou posições inventadas. A precisão deve ser validada em dispositivos compatíveis, respeitando as limitações de câmera, iluminação e hardware.
+
+O objetivo é obter a experiência mais próxima possível de tocar diretamente em uma interface holográfica.
+
+## Regras de integração com o restante do projeto
+
+- O toque com o indicador (poke) é a interação primária de seleção. A pinça (seção 9) continua sendo usada para agarrar, arrastar, girar e redimensionar janelas, e como seleção à distância via raio a partir da mão.
+- O estilo preto/cinza desta seção é o padrão do contorno da seção 6. As opções de cor, espessura, brilho e transparência da seção 6 continuam disponíveis em Configurações, com este estilo como predefinição.
+- Evitar toque acidental: considerar a ponta do indicador como "ativa" somente quando o dedo estiver estendido e os demais dedos recolhidos ou relaxados. Usar histerese entre entrada e saída da superfície (ex.: limiar de entrada diferente do de saída), cooldown curto por elemento e zona morta nas bordas dos botões.
+- Cada elemento interativo deve expor uma área de toque (collider) com margem mínima confortável, especialmente as teclas do teclado virtual.
+- Feedback instantâneo obrigatório: realce do elemento ao aproximar o dedo, indicador de profundidade/proximidade e confirmação visual (e sonora opcional) no momento do contato.
+- Sliders e controles contínuos devem manter o dedo "preso" ao controle enquanto houver contato, sem pular de valor.
+- Quando a profundidade da ponta do dedo não for confiável (câmera única, pouca luz, mão parcialmente fora do campo de visão), o sistema deve reduzir a confiança, sinalizar a limitação ao usuário e oferecer alternativa (pinça à distância, gaze, controle virtual ou controlador), em vez de inventar a posição.
+- A latência de ponta a ponta (captura da câmera → pose da mão → feedback visual) deve ser medida e exibida em um painel de depuração, para que a precisão possa ser validada em aparelhos reais.
+- Informar claramente quais aparelhos e acessórios sustentam esta interação: 3DoF com giroscópio apenas não fornece posição das mãos; é necessária uma câmera com visão das mãos (externa ou outro dispositivo) para o toque direto funcionar.
+
+## Referências visuais anexadas
+
+As imagens de referência mostram a interface espacial do Meta Quest OS (Horizon OS): janelas escuras e translúcidas flutuando em arco, barra de aplicativos compacta na parte inferior, botões em estilo pílula, contorno de mão fino sobre o ambiente, e um pequeno indicador circular na ponta do dedo/pinça. Usar como referência de proporção, hierarquia e comportamento, reproduzindo os conceitos de forma original, sem copiar assets proprietários.
+
+---
+
+# 8. GESTO DE ESTALO — FINGER SNAP
+
+Quero que o usuário consiga abrir a interface principal através de um estalo de dedos.
+
+O sistema deverá utilizar o microfone do smartphone para detectar o som de um estalo.
+
+Quando o estalo for detectado:
+- Abrir a interface principal.
+- Posicionar a interface diante do usuário.
+- Executar uma animação suave.
+- Reproduzir um feedback sonoro opcional.
+- Evitar abrir várias interfaces simultaneamente.
+
+Implementar:
+- Detecção de intensidade.
+- Detecção de frequência.
+- Filtro de ruído.
+- Limite de confiança.
+- Cooldown.
+- Prevenção de falsos positivos.
+- Configuração de sensibilidade.
+- Opção para desativar o recurso.
+
+Não considerar qualquer barulho alto como um estalo.
+
+Criar uma alternativa de abertura por gesto, gaze, botão ou controle virtual caso o microfone não consiga detectar o estalo corretamente.
+
+---
+
+# 9. GESTOS DE INTERAÇÃO
+
+Criar um sistema de gestos para controlar o ambiente.
+
+Gestos desejados:
+- Pinça com polegar e indicador.
+- Abrir a mão.
+- Fechar a mão.
+- Apontar.
+- Selecionar.
+- Agarrar.
+- Arrastar.
+- Soltar.
+- Girar.
+- Redimensionar.
+- Confirmar.
+- Voltar.
+- Abrir menu.
+- Fechar menu.
+
+A pinça deverá funcionar como um botão de seleção.
+
+Quando o usuário fizer pinça sobre uma janela:
+- Selecionar a janela.
+- Permitir arrastá-la.
+- Manter a janela agarrada ao gesto.
+- Soltar a janela quando o gesto terminar.
+
+Implementar feedback visual e sonoro.
+
+Evitar falsos gestos e movimentos involuntários.
+
+---
+
+# 10. TECLADO VIRTUAL 3D
+
+Criar um teclado virtual tridimensional extremamente preciso.
+
+O teclado deverá aparecer dentro do ambiente VR.
+
+Características:
+- Teclas tridimensionais.
+- Layout QWERTY.
+- Português brasileiro.
+- Inglês.
+- Letras.
+- Números.
+- Símbolos.
+- Enter.
+- Backspace.
+- Shift.
+- Espaço.
+- Tab.
+- Caps Lock.
+- Escape.
+- Teclas de navegação.
+
+Cada tecla deverá possuir uma área de interação individual.
+
+Quando uma tecla for selecionada:
+- Ela deverá apresentar feedback visual.
+- Ela deverá apresentar feedback sonoro opcional.
+- O caractere deverá aparecer no campo de texto.
+- A tecla deverá reagir à interação.
+
+Permitir digitação através de:
+- Tracking de mãos.
+- Pinça.
+- Ponta do dedo.
+- Gaze.
+- Controle virtual.
+- Alternativas compatíveis com VR Box.
+
+A precisão deve ser prioridade.
+
+Evitar:
+- Teclas que não respondem.
+- Letras erradas.
+- Cliques duplicados.
+- Interações imprecisas.
+- Atrasos excessivos.
+
+O teclado deverá ser confortável para digitação dentro da realidade virtual.
+
+---
+
+
+
+---
+
+# ÍCONES DOS APLICATIVOS — APP LAUNCHER
+
+Adicionar ícones visuais individuais para todos os aplicativos e serviços exibidos na interface do LUNARO VR.
+
+O menu de aplicativos deverá apresentar uma biblioteca organizada, moderna e visualmente semelhante a um launcher de sistema operacional VR premium.
+
+Aplicativos que devem possuir ícones próprios, quando disponíveis:
+- YouTube.
+- Netflix.
+- Google.
+- Google Chrome.
+- Roblox.
+- Spotify.
+- Twitch.
+- Prime Video.
+- Disney+.
+- Configurações.
+- Navegador.
+- Galeria.
+- Outros aplicativos instalados ou integrados que sejam compatíveis.
+
+## Requisitos visuais e funcionais
+
+- Exibir um ícone identificável para cada aplicativo.
+- Utilizar ícones oficiais/brand assets quando seu uso for permitido; caso contrário, utilizar ícones alternativos originais e reconhecíveis, sem copiar assets protegidos indevidamente.
+- Não usar quadrados vazios, placeholders genéricos ou texto puro como substituto dos ícones na versão final.
+- Manter os ícones em alta resolução, com proporções corretas e sem distorção.
+- Aplicar uma apresentação consistente: tamanho uniforme, espaçamento adequado, bordas ou fundos coerentes com o design LUNARO VR.
+- Exibir nome do aplicativo abaixo ou ao lado do ícone.
+- Criar estados visuais de foco, seleção, hover e abertura.
+- Ao selecionar um ícone, executar a ação real correspondente: abrir o aplicativo, iniciar a integração ou mostrar uma mensagem clara caso ele não esteja instalado ou não seja compatível.
+- Permitir organizar os aplicativos em grade, categorias ou favoritos.
+- Permitir adicionar/remover aplicativos dos favoritos.
+- Adaptar a grade para diferentes resoluções e tamanhos de janela VR.
+- Não deixar ícones apenas decorativos: cada item deve possuir uma ação funcional.
+
+## Ícones e aplicativos instalados no Android
+
+Quando tecnicamente possível, obter o ícone e o nome dos aplicativos instalados por meio das APIs Android apropriadas, respeitando as regras de visibilidade de pacotes e permissões do Android.
+
+Para serviços integrados, como YouTube e Netflix, criar atalhos próprios no launcher. Se o aplicativo oficial estiver instalado, tentar abri-lo por meio de intents/deep links compatíveis. Caso contrário, oferecer abertura pelo navegador ou informar claramente a alternativa disponível.
+
+Não afirmar que é possível incorporar diretamente qualquer aplicativo Android em uma janela 3D. Diferenciar:
+- Abrir o aplicativo externo.
+- Abrir o serviço no navegador virtual.
+- Exibir conteúdo dentro de uma janela VR.
+- Integração nativa real, quando suportada.
+
+
+# 11. SISTEMA DE JANELAS 3D
+
+Criar um sistema completo de janelas tridimensionais.
+
+O usuário deverá poder:
+- Abrir múltiplas janelas.
+- Mover janelas.
+- Girar janelas.
+- Redimensionar janelas.
+- Minimizar janelas.
+- Fechar janelas.
+- Organizar janelas.
+- Colocar janelas lado a lado.
+- Alterar profundidade.
+- Ajustar distância.
+- Reposicionar janelas.
+- Selecionar janelas.
+
+As janelas devem existir como objetos 3D no ambiente.
+
+Cada janela deverá possuir:
+- Barra superior.
+- Botão de fechar.
+- Botão de minimizar.
+- Área de conteúdo.
+- Bordas.
+- Sombra.
+- Feedback visual.
+- Animações.
+
+Implementar uma opção para alternar entre:
+- Janelas presas à cabeça.
+- Janelas posicionadas no mundo.
+
+O padrão para janelas interativas deverá ser World-Locked.
+
+---
+
+# 12. NAVEGADOR VIRTUAL
+
+Criar um navegador integrado ao ambiente VR.
+
+O navegador deverá permitir:
+- Abrir sites.
+- Navegar.
+- Pesquisar no Google.
+- Abrir YouTube.
+- Abrir páginas.
+- Utilizar abas.
+- Voltar.
+- Avançar.
+- Atualizar.
+- Favoritos.
+- Histórico.
+- Campo de endereço.
+- Campo de pesquisa.
+
+Implementar:
+- Navegação privada.
+- Abas anônimas.
+- Sessão isolada.
+- Não salvar histórico da sessão privada.
+- Não compartilhar cookies com a sessão normal, quando tecnicamente possível.
+
+Utilizar uma solução compatível com Android, como WebView ou outra tecnologia apropriada.
+
+Renderizar o conteúdo do navegador dentro de uma janela tridimensional.
+
+O navegador deverá funcionar como uma superfície virtual dentro do ambiente.
+
+Considerar:
+- Compatibilidade com sites.
+- Login.
+- Cookies.
+- DRM.
+- Conteúdo protegido.
+- Limitações de WebView.
+- Segurança.
+- Performance.
+
+Não prometer compatibilidade universal com qualquer site.
+
+---
+
+# 13. GOOGLE, YOUTUBE E ROBLOX
+
+Criar acesso rápido aos seguintes serviços:
+
+- Google.
+- YouTube.
+- Roblox.
+- Navegador.
+- Aplicativos Android compatíveis.
+
+O usuário deverá conseguir abrir esses serviços em janelas virtuais.
+
+## YouTube
+
+Criar uma experiência de visualização em tela virtual.
+
+O usuário deverá poder:
+- Abrir vídeos.
+- Assistir dentro de uma janela.
+- Redimensionar a janela.
+- Mover a janela.
+- Posicionar a janela.
+- Criar uma experiência de cinema virtual.
+
+Respeitar limitações de reprodução, DRM, login e compatibilidade.
+
+## Roblox
+
+Criar integração com Roblox.
+
+Avaliar:
+- Abrir Roblox Android.
+- Abrir Roblox através de links.
+- Exibir conteúdo em janela virtual.
+- Alternar entre LUNARO VR e Roblox.
+- Compatibilidade com Android.
+
+Não afirmar que Roblox possui suporte VR nativo no VR Box se isso não for realmente possível.
+
+Caso não seja possível renderizar Roblox diretamente dentro de uma janela, implementar uma alternativa realista e explicar a limitação.
+
+---
+
+# 14. AMBIENTES VIRTUAIS
+
+Criar múltiplos ambientes tridimensionais imersivos.
+
+O usuário deverá conseguir trocar de ambiente.
+
+Ambientes desejados:
+
+### Cinema
+- Sala escura.
+- Tela gigante.
+- Poltronas.
+- Iluminação cinematográfica.
+- Ambiente imersivo.
+
+### Espaço
+- Estrelas.
+- Planetas.
+- Nebulosas.
+- Ambiente espacial.
+- Janelas flutuantes.
+
+### Quarto moderno
+- Design minimalista.
+- Iluminação suave.
+- Móveis.
+- Ambiente confortável.
+
+### Cyberpunk
+- Neon.
+- Cidade futurista.
+- Iluminação colorida.
+- Atmosfera tecnológica.
+
+### Natureza
+- Montanhas.
+- Florestas.
+- Paisagens.
+- Céu.
+- Ambiente tranquilo.
+
+### Ambiente minimalista
+- Fundo limpo.
+- Poucos elementos.
+- Interface em destaque.
+
+Os ambientes deverão ser tridimensionais.
+
+Não quero apenas imagens estáticas utilizadas como fundo.
+
+Criar ambientes com profundidade, perspectiva e sensação espacial.
+
+As janelas deverão permanecer posicionadas corretamente dentro dos ambientes.
+
+---
+
+# 15. SISTEMA DE MOVIMENTAÇÃO
+
+Implementar movimentação dentro do ambiente virtual.
+
+O sistema deverá permitir:
+- Movimentação virtual.
+- Teleporte, se necessário.
+- Recentragem.
+- Rotação.
+- Ajuste de velocidade.
+- Movimento confortável.
+- Opção de desativar movimentação.
+
+Como o VR Box convencional normalmente não possui tracking posicional 6DoF, implementar movimentação virtual compatível.
+
+Não confundir movimentação virtual com detecção real de movimento físico.
+
+Se houver tracking externo, permitir utilizar movimentação física real.
+
+---
+
+# 16. SISTEMA DE CONFORTO VR
+
+O aplicativo deverá priorizar conforto visual e prevenção de enjoo.
+
+Implementar:
+- Recentragem da visão.
+- Ajuste de sensibilidade.
+- Configuração de movimento.
+- Opção de teleporte.
+- Ajuste de velocidade.
+- Opção de reduzir animações.
+- Opção de desativar efeitos.
+- Controle de distância das janelas.
+- Controle de escala.
+- Configuração de conforto.
+
+Evitar:
+- Movimentos bruscos.
+- Animações excessivamente rápidas.
+- Oscilações artificiais.
+- Rotação automática desnecessária.
+- Mudanças repentinas de posição.
+
+---
+
+# 17. CONFIGURAÇÕES
+
+Criar uma interface completa de configurações.
+
+Opções:
+- Sensibilidade do giroscópio.
+- Recentrar visão.
+- Ajustar distância da interface.
+- Ajustar escala da interface.
+- Ajustar brilho.
+- Ajustar volume.
+- Ativar ou desativar sons.
+- Ativar ou desativar tracking.
+- Configurar câmera.
+- Configurar gestos.
+- Configurar estalo.
+- Configurar teclado.
+- Configurar ambiente.
+- Configurar conforto.
+- Configurar desempenho.
+- Configurar VR Box.
+
+A interface de configurações deverá ser tridimensional e seguir o estilo visual do sistema.
+
+---
+
+
+
+---
+
+# SISTEMA DE REALIDADE AUMENTADA (AR)
+
+Adicionar ao LUNARO VR um sistema completo de **Realidade Aumentada (AR)**, integrado à arquitetura existente e com um modo próprio chamado **LUNARO AR**.
+
+O aplicativo deverá oferecer dois modos principais:
+- **LUNARO VR:** experiência VR estereoscópica para VR Box.
+- **LUNARO AR:** experiência de realidade aumentada usando a câmera do smartphone, quando o aparelho for compatível.
+
+Não misturar os dois modos de forma artificial. Explicar que, em um VR Box convencional, a câmera do celular normalmente fica bloqueada dentro do headset; portanto, AR com câmera traseira deve funcionar preferencialmente fora do VR Box, salvo quando houver hardware ou configuração compatível.
+
+## Recursos AR desejados
+
+Implementar, quando suportado pelo dispositivo:
+- Visualização ao vivo da câmera.
+- Detecção de planos horizontais e verticais.
+- Detecção de superfícies, como chão, mesas e paredes.
+- Colocação de objetos 3D no mundo real.
+- Posicionamento, rotação e escala de objetos AR.
+- Ancoragem de objetos para que permaneçam no local detectado.
+- Interação por toque na tela.
+- Seleção, movimentação, rotação, redimensionamento e remoção de objetos.
+- Indicador visual de superfície detectada.
+- Retícula de posicionamento.
+- Botão para colocar objeto.
+- Botão para recentrar/reiniciar a sessão AR.
+- Interface de configurações AR.
+- Alternância entre modo VR e modo AR, com encerramento correto da sessão anterior.
+
+## ARCore e compatibilidade
+
+Avaliar e utilizar **Google ARCore** quando o smartphone for compatível.
+
+Implementar:
+- Verificação de compatibilidade ARCore antes de iniciar.
+- Verificação de disponibilidade dos serviços necessários.
+- Solicitação de permissões de câmera.
+- Tratamento de aparelhos incompatíveis.
+- Tratamento de falhas de tracking.
+- Tratamento de pouca iluminação e superfícies sem textura.
+- Mensagens claras quando o tracking não estiver disponível.
+- Alternativa sem AR, permitindo continuar usando as funções VR compatíveis.
+
+Não afirmar que todos os smartphones Android suportam ARCore.
+
+Não simular detecção de planos, tracking ou ancoragem quando esses recursos não estiverem funcionando.
+
+## Objetos e experiências AR
+
+Preparar o sistema para inserir objetos 3D no ambiente real, como:
+- Painéis virtuais.
+- Janelas flutuantes.
+- Modelos 3D.
+- Elementos decorativos.
+- Interfaces do LUNARO VR.
+- Conteúdo interativo.
+
+Os objetos deverão permanecer ancorados na posição estimada pelo tracking, respeitando as limitações do ARCore e do dispositivo.
+
+## Arquitetura AR
+
+Criar módulos separados:
+- AR Core / AR Session Manager.
+- AR Tracking.
+- Plane Detection.
+- Raycast / Hit Test.
+- AR Anchor Manager.
+- AR Object Manager.
+- AR Interaction.
+- AR UI.
+- AR Settings.
+- AR Android Integration.
+
+Utilizar Unity + C# para a cena e lógica AR quando apropriado, com AR Foundation e ARCore XR Plugin, avaliando as versões compatíveis.
+
+A camada Android nativa deverá ser escrita em **Kotlin (KT), não Java**. Se algum SDK ou plugin exigir uma interface Java, criar somente a ponte estritamente necessária e manter o código nativo do projeto em Kotlin sempre que possível.
+
+## Performance e privacidade
+
+- Priorizar baixa latência e estabilidade.
+- Reduzir consumo de bateria e aquecimento.
+- Encerrar a câmera quando o modo AR for fechado.
+- Não capturar, armazenar ou enviar imagens da câmera sem necessidade e sem consentimento.
+- Explicar quais permissões são utilizadas.
+- Não manter a câmera ativa em segundo plano sem motivo.
+- Respeitar as limitações de câmera, sensores e processamento de cada aparelho.
+
+## Interface do modo AR
+
+Criar uma interface moderna e consistente com a identidade visual LUNARO VR:
+- Botão para entrar/sair do AR.
+- Estado do tracking.
+- Estado de detecção de superfície.
+- Seleção de objetos.
+- Controles de posição, rotação e escala.
+- Recentragem.
+- Ajuda rápida.
+- Avisos de compatibilidade.
+
+A interface deve permanecer legível sobre a imagem da câmera e não bloquear desnecessariamente a visão do ambiente real.
+
+
+# 18. ARQUITETURA DO PROJETO
+
+Utilizar uma arquitetura profissional, modular e organizada.
+
+Avaliar Unity com C# como tecnologia principal para o ambiente 3D.
+
+Utilizar tecnologias Android compatíveis para:
+- Sensores.
+- Microfone.
+- Câmera.
+- Permissões.
+- Aplicativos externos.
+- Navegação.
+- Instalação.
+
+Organizar o projeto em módulos:
+
+- Core.
+- VR System.
+- Head Tracking.
+- Hand Tracking.
+- Hand Outline.
+- Hand UI.
+- Gesture System.
+- Snap Detection.
+- World UI.
+- Window Manager.
+- Virtual Keyboard.
+- Browser.
+- App Launcher.
+- Environment Manager.
+- Settings.
+- Audio.
+- Android Integration.
+
+Separar responsabilidades.
+
+Evitar scripts gigantes e sistemas desorganizados.
+
+Utilizar padrões de desenvolvimento adequados.
+
+Criar código limpo, reutilizável e extensível.
+
+---
+
+# 19. DESEMPENHO
+
+O aplicativo deverá funcionar em smartphones Android compatíveis com VR Box.
+
+Priorizar:
+- FPS estável.
+- Baixa latência.
+- Otimização de renderização.
+- Redução de consumo de memória.
+- Redução de consumo de bateria.
+- Controle de temperatura.
+- Otimização de shaders.
+- Otimização de modelos.
+- Otimização de ambientes.
+- Renderização eficiente.
+
+Implementar configurações gráficas:
+- Baixa.
+- Média.
+- Alta.
+
+Não criar efeitos visuais que prejudiquem significativamente o desempenho.
+
+---
+
+# 20. IDENTIDADE VISUAL
+
+Nome do aplicativo: **LUNARO VR**
+
+Criar uma identidade visual profissional.
+
+Características:
+- Futurista.
+- Premium.
+- Minimalista.
+- Elegante.
+- Moderna.
+- Espacial.
+- Tecnológica.
+
+Criar:
+- Logo.
+- Ícone do aplicativo.
+- Splash screen.
+- Identidade visual.
+- Paleta de cores.
+- Tipografia.
+- Elementos de interface.
+
+A aparência deverá lembrar um sistema VR comercial de alta qualidade.
+
+Não utilizar designs genéricos ou improvisados.
+
+---
+
+# 21. REFERÊNCIAS VISUAIS
+
+Vou enviar imagens de referência durante o desenvolvimento.
+
+Quando receber imagens:
+- Analisar cuidadosamente.
+- Identificar elementos visuais.
+- Identificar disposição.
+- Identificar proporções.
+- Identificar cores.
+- Identificar animações.
+- Identificar profundidade.
+- Identificar comportamento.
+- Reproduzir os conceitos visuais de maneira original.
+
+Não ignorar as referências.
+
+Não modificar drasticamente a ideia visual sem explicar o motivo.
+
+Utilizar as referências como base para melhorar a interface.
+
+---
+
+# 22. REGRAS IMPORTANTES DE DESENVOLVIMENTO
+
+Não quero apenas uma demonstração visual.
+
+Quero um aplicativo funcional.
+
+Não criar botões decorativos que não funcionam.
+
+Não simular recursos inexistentes.
+
+Não entregar código incompleto.
+
+Não utilizar pseudocódigo como se fosse implementação final.
+
+Não deixar funcionalidades importantes apenas como comentários.
+
+Não afirmar que recursos foram testados se não foram.
+
+Não prometer precisão absoluta de tracking sem testes reais.
+
+Caso alguma funcionalidade não seja tecnicamente possível:
+1. Explicar o motivo.
+2. Identificar a limitação do hardware.
+3. Apresentar alternativas.
+4. Implementar a alternativa mais viável.
+5. Manter a arquitetura preparada para futuras melhorias.
+
+Priorizar:
+- Qualidade.
+- Estabilidade.
+- Precisão.
+- Desempenho.
+- Interface.
+- Compatibilidade.
+- Organização.
+
+---
+
+# 23. ESTRUTURA PROFISSIONAL PARA GITHUB
+
+O projeto deverá estar preparado para ser publicado no GitHub.
+
+Criar um repositório profissional, organizado e completo.
+
+O repositório deverá conter:
+
+- Código-fonte completo.
+- Scripts.
+- Assets necessários.
+- Modelos 3D.
+- Texturas.
+- Materiais.
+- Shaders.
+- Configurações.
+- Dependências.
+- Documentação.
+- Arquivos de build.
+- Estrutura organizada.
+
+Criar um README.md profissional contendo:
+- Nome do projeto.
+- Descrição.
+- Funcionalidades.
+- Tecnologias utilizadas.
+- Requisitos.
+- Instalação.
+- Configuração.
+- Como abrir o projeto.
+- Como compilar.
+- Como instalar no Android.
+- Como configurar VR Box.
+- Limitações conhecidas.
+- Imagens e demonstrações, quando disponíveis.
+
+Criar um `.gitignore` adequado para Unity, Android Studio e arquivos temporários.
+
+Não incluir:
+- Cache desnecessário.
+- Arquivos temporários.
+- Builds gigantes desnecessárias.
+- Senhas.
+- Tokens.
+- Chaves privadas.
+- Keystores de assinatura.
+- Informações confidenciais.
+
+Organizar o projeto para que outra pessoa consiga baixar o repositório e continuar o desenvolvimento.
+
+Não criar um repositório contendo apenas arquivos vazios ou exemplos incompletos.
+
+---
+
+# 24. APLICATIVO ANDROID INSTALÁVEL — APK
+
+Quero que o projeto possa ser transformado em um aplicativo Android instalável.
+
+Preparar o sistema para gerar:
+
+- APK para instalação direta.
+- AAB, caso seja necessário para distribuição pela Google Play.
+
+Configurar:
+- Nome do aplicativo: LUNARO VR.
+- Ícone.
+- Splash screen.
+- Package ID.
+- Permissões Android.
+- Orientação de tela.
+- Configurações VR.
+- Configurações de sensores.
+- Configurações de áudio.
+- Configurações de câmera, se necessário.
+
+O APK deverá ser compatível com smartphones Android suportados.
+
+Criar instruções claras para instalar o aplicativo no smartphone e utilizá-lo dentro do VR Box.
+
+O processo de build deverá ser reproduzível.
+
+Se estiver utilizando Unity:
+- Preparar projeto Unity.
+- Configurar Android Build Support.
+- Configurar SDK.
+- Configurar NDK.
+- Configurar Gradle.
+- Preparar build Android.
+
+Se estiver utilizando Android Studio:
+- Desenvolver a camada Android nativa em **Kotlin (KT)**, não Java.
+- Utilizar arquivos `.kt` para Activities, Services, integração Android, permissões e APIs nativas.
+- Preparar projeto Gradle com Kotlin DSL (`build.gradle.kts`) quando compatível.
+- Configurar dependências.
+- Configurar compilação.
+- Preparar APK.
+
+**IMPORTANTE:** Não afirmar que o APK foi gerado se ele não tiver sido realmente compilado.
+
+Caso seja possível compilar no ambiente de desenvolvimento, gerar o APK e disponibilizar o arquivo real.
+
+Caso não seja possível, entregar o projeto completo e explicar exatamente como compilar localmente.
+
+---
+
+# 25. GITHUB ACTIONS — BUILD AUTOMÁTICO
+
+Se possível, criar um workflow GitHub Actions para compilar automaticamente o aplicativo Android.
+
+O workflow deverá:
+- Preparar o ambiente.
+- Configurar dependências.
+- Compilar o projeto.
+- Gerar APK.
+- Disponibilizar APK como artifact.
+- Exibir erros de build.
+- Permitir download do resultado.
+
+Não armazenar senhas ou chaves de assinatura diretamente no código.
+
+Se for necessário assinar o aplicativo:
+- Utilizar GitHub Secrets.
+- Explicar a configuração.
+- Não expor a keystore.
+- Não expor senhas.
+- Não incluir credenciais no repositório.
+
+Caso a compilação automática não seja viável, documentar a alternativa.
+
+---
+
+# 26. ENTREGÁVEIS FINAIS
+
+Ao concluir, entregar:
+
+1. Projeto completo.
+2. Código-fonte.
+3. Estrutura profissional.
+4. README.
+5. Instruções de instalação.
+6. Instruções para abrir o projeto.
+7. Instruções para compilar.
+8. Repositório pronto para GitHub.
+9. APK real, caso seja possível compilar.
+10. Instruções para gerar o APK.
+11. Lista de funcionalidades implementadas.
+12. Lista de limitações.
+13. Lista de funcionalidades que dependem de hardware externo.
+14. Próximas etapas recomendadas.
+
+Não entregar apenas imagens ou protótipos.
+
+Não considerar o projeto concluído se os principais sistemas forem apenas visuais.
+
+---
+
+# 27. PROCESSO DE DESENVOLVIMENTO
+
+Antes de começar a programar:
+
+1. Analisar cuidadosamente todos os requisitos.
+2. Verificar a viabilidade técnica.
+3. Identificar limitações do VR Box.
+4. Escolher a arquitetura.
+5. Escolher as tecnologias.
+6. Definir a estrutura do projeto.
+7. Explicar quais recursos são possíveis.
+8. Explicar quais recursos exigem hardware adicional.
+9. Criar um plano de implementação.
+10. Começar pelo núcleo funcional do aplicativo.
+
+Desenvolver por etapas.
+
+Não tentar implementar tudo de maneira desorganizada em um único script.
+
+Criar primeiro:
+- Renderização VR.
+- Rastreamento de cabeça.
+- Interface 3D.
+- Janelas espaciais.
+- Sistema de perspectiva.
+- Movimentação virtual.
+- Menu principal.
+
+Depois implementar:
+- Hand Tracking.
+- Hand Outline.
+- Hand UI.
+- Gestos.
+- Teclado.
+- Navegador.
+- Ambientes.
+- Integrações.
+
+Testar cada etapa antes de avançar.
+
+---
+
+# OBJETIVO FINAL
+
+Quero que o LUNARO VR seja um aplicativo de realidade virtual visualmente impressionante, profissional, funcional e imersivo.
+
+Quero uma experiência que lembre o Meta Quest 3, adaptada para smartphones Android e VR Box.
+
+O usuário deverá sentir que está dentro de um ambiente tridimensional, com janelas flutuantes, interfaces espaciais, ambientes imersivos, teclado virtual, navegador e ferramentas interativas.
+
+A interface deverá parecer um sistema operacional VR real, não um aplicativo Android comum.
+
+A prioridade máxima é qualidade visual, funcionalidade, estabilidade, experiência espacial e compatibilidade real com o hardware.
+
+Antes de prometer qualquer funcionalidade, avaliar se ela é tecnicamente possível no VR Box utilizado.
+
+Desenvolver o projeto com qualidade profissional, documentação completa e estrutura preparada para GitHub e distribuição Android.
